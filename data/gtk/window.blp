@@ -2,7 +2,32 @@ using Gtk 4.0;
 using Adw 1;
 
 template $StreamsWindow : Adw.ApplicationWindow {
-  title: _("Streams");
+  title: "Streams";
   width-request: 640;
   height-request: 480;
+
+  Adw.Breakpoint {}
+
+  content: Adw.OverlaySplitView split_view {
+    sidebar: Adw.ToolbarView {
+      [top]
+      Adw.HeaderBar {
+
+        title-widget: Adw.WindowTitle {
+          title: _("Channels");
+        };
+      }
+    };
+
+    content: Adw.ToolbarView {
+      [top]
+      Adw.TabBar stream_tab_bar {
+        
+      }
+
+      content: Adw.TabView stream_tab_view {
+        
+      };
+    };
+  };
 }
