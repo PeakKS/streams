@@ -1,15 +1,17 @@
-use adw::subclass::prelude::{ObjectImpl, ObjectSubclass, ObjectSubclassIsExt};
-use gtk::{gio::{self, prelude::SettingsExt}, glib, prelude::GtkWindowExt, subclass::widget::CompositeTemplateClass, TemplateChild};
-use adw::subclass::prelude::{ObjectImplExt, ObjectSubclassExt};
-use gtk::subclass::{prelude::ApplicationWindowImpl, widget::WidgetImpl, window::{WindowImpl, WindowImplExt}};
-use adw::subclass::prelude::WidgetClassExt;
+use adw::subclass::prelude::{ObjectImpl, ObjectImplExt, ObjectSubclass, WidgetClassExt};
+use gtk::subclass::{
+    prelude::ApplicationWindowImpl,
+    widget::WidgetImpl,
+    window::{WindowImpl, WindowImplExt},
+};
+use gtk::{gio, glib, subclass::widget::CompositeTemplateClass, TemplateChild};
 
+use crate::accounts::twitch;
 use crate::application::StreamsApplication;
-
 
 mod imp {
     use adw::subclass::prelude::AdwApplicationWindowImpl;
-    use gtk::subclass::widget::CompositeTemplateInitializingExt;
+    use gtk::{prelude::ButtonExt, subclass::widget::CompositeTemplateInitializingExt};
 
     use super::*;
 
@@ -24,6 +26,9 @@ mod imp {
 
         #[template_child]
         pub stream_tab_view: TemplateChild<adw::TabView>,
+
+        #[template_child]
+        pub sign_in_button: TemplateChild<gtk::Button>,
     }
 
     impl Default for StreamsWindow {
@@ -32,6 +37,7 @@ mod imp {
                 split_view: TemplateChild::default(),
                 stream_tab_bar: TemplateChild::default(),
                 stream_tab_view: TemplateChild::default(),
+                sign_in_button: TemplateChild::default(),
             }
         }
     }
@@ -55,6 +61,7 @@ mod imp {
         fn constructed(&self) {
             self.parent_constructed();
 
+            self.configure_actions();
         }
     }
 
@@ -68,6 +75,15 @@ mod imp {
 
     impl ApplicationWindowImpl for StreamsWindow {}
     impl AdwApplicationWindowImpl for StreamsWindow {}
+
+    impl StreamsWindow {
+        fn configure_actions(&self) {
+            self.sign_in_button.connect_clicked(|arg| {
+                println!("Clicked!");
+                twitch::sign_in();
+            });
+        }
+    }
 }
 
 glib::wrapper! {

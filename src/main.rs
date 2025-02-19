@@ -1,7 +1,19 @@
+mod accounts;
 mod application;
 mod window;
+
+use std::sync::OnceLock;
+
 use application::StreamsApplication;
-use gtk::{glib, gio};
+use gtk::{gio, glib};
+
+use tokio::runtime::Runtime;
+
+fn runtime() -> &'static Runtime {
+    static RUNTIME: OnceLock<Runtime> = OnceLock::new();
+    RUNTIME.get_or_init(|| Runtime::new().expect("Failed to initialize tokio runtime"))
+}
+
 fn main() {
     glib::set_application_name("Streams");
 
@@ -11,10 +23,10 @@ fn main() {
         "/io/github/PeakKS/Streams/data/streams.gresource".to_owned()
     };
 
-    let res = gio::Resource::load(&format!("{gresource_dir}/streams.gresource")).expect("Could not load gresources file");
+    let res = gio::Resource::load(&format!("{gresource_dir}/streams.gresource"))
+        .expect("Could not load gresources file");
 
     gio::resources_register(&res);
     let app = StreamsApplication::default();
     app.run();
-
 }

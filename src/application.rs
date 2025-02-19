@@ -4,7 +4,6 @@ use gtk::{gio, glib};
 
 use crate::window::StreamsWindow;
 
-
 mod imp {
     use std::cell::OnceCell;
 
@@ -14,10 +13,10 @@ mod imp {
     use crate::window::StreamsWindow;
 
     use super::*;
-    
+
     #[derive(Debug, Default)]
     pub struct StreamsApplication {
-        pub window: OnceCell<WeakRef<StreamsWindow>>
+        pub window: OnceCell<WeakRef<StreamsWindow>>,
     }
 
     #[glib::object_subclass]
@@ -41,7 +40,9 @@ mod imp {
             }
 
             let window = StreamsWindow::new(&app);
-            self.window.set(window.downgrade()).expect("Window already set.");
+            self.window
+                .set(window.downgrade())
+                .expect("Window already set.");
             app.main_window().present();
         }
 
@@ -66,15 +67,16 @@ glib::wrapper! {
 
 impl StreamsApplication {
     fn main_window(&self) -> StreamsWindow {
-        self.imp().window.get().unwrap().upgrade().unwrap() 
+        self.imp().window.get().unwrap().upgrade().unwrap()
     }
 
     fn setup_gactions(&self) {
         let action_quit = gio::ActionEntry::builder("quit")
-        .activate(move |app: &Self, _, _| {
-            app.main_window().close();
-            app.quit();
-        }).build();
+            .activate(move |app: &Self, _, _| {
+                app.main_window().close();
+                app.quit();
+            })
+            .build();
 
         self.add_action_entries([action_quit]);
     }
@@ -92,8 +94,8 @@ impl StreamsApplication {
 impl Default for StreamsApplication {
     fn default() -> Self {
         glib::Object::builder()
-        .property("application-id", "io.github.PeakKS.Streams")
-        .property("resource-base-path", "/io/github/PeakKS/Streams/")
-        .build()
+            .property("application-id", "io.github.PeakKS.Streams")
+            .property("resource-base-path", "/io/github/PeakKS/Streams/")
+            .build()
     }
 }

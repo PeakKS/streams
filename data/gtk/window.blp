@@ -17,6 +17,16 @@ template $StreamsWindow : Adw.ApplicationWindow {
           title: _("Channels");
         };
       }
+
+
+
+      [bottom]
+      Gtk.ActionBar {
+        [end]
+        Gtk.Button sign_in_button {
+          label: _("Sign In");
+        }
+      }
     };
 
     content: Adw.ToolbarView {
