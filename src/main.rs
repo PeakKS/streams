@@ -24,7 +24,8 @@ fn main() {
     let gresource_dir = if let Ok(gresource_dir) = std::env::var("STREAMS_RESOURCE_DIR") {
         gresource_dir
     } else {
-        "/io/github/PeakKS/Streams/data/streams.gresource".to_owned()
+        // Match Gio Application behavior of creating resource base path from app id
+        format!("/{}/data", config::APP_ID.replace(".", "/"))
     };
 
     let res = gio::Resource::load(&format!("{gresource_dir}/streams.gresource"))
