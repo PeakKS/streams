@@ -2,6 +2,10 @@ mod accounts;
 mod application;
 mod window;
 
+mod config {
+    include!(concat!(env!("BUILD_ROOT"), "/src/config.rs"));
+}
+
 use std::sync::OnceLock;
 
 use application::StreamsApplication;

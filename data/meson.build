@@ -12,7 +12,7 @@ blueprints = custom_target('blueprints',
     ],
 )
 
-gnome.compile_resources('streams',
+resources = gnome.compile_resources('streams',
     configure_file(
         input: 'streams.gresource.xml.in',
         output: 'streams.gresource.xml',

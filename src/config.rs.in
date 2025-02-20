@@ -1,0 +1,2 @@
+pub const APP_ID: &'static str = "@APP_ID@";
+pub const TWITCH_CLIENT_ID: &'static str = "@TWITCH_CLIENT_ID@";

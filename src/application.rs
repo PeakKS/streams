@@ -2,6 +2,7 @@ use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::{gio, glib};
 
+use crate::config;
 use crate::window::StreamsWindow;
 
 mod imp {
@@ -94,8 +95,7 @@ impl StreamsApplication {
 impl Default for StreamsApplication {
     fn default() -> Self {
         glib::Object::builder()
-            .property("application-id", "io.github.PeakKS.Streams")
-            .property("resource-base-path", "/io/github/PeakKS/Streams/")
+            .property("application-id", config::APP_ID)
             .build()
     }
 }

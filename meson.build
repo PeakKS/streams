@@ -6,10 +6,13 @@ project('streams',
 
 gnome = import('gnome')
 
+app_id = get_option('app_id')
+prefix = '/' + app_id.replace('.', '/')
 config = configuration_data(
     {
-        'APP_ID': 'io.github.PeakKS/Streams',
-        'PREFIX': '/io/github/PeakKS/Streams',
+        'APP_ID': app_id,
+        'PREFIX': prefix,
+        'TWITCH_CLIENT_ID': get_option('twitch_client_id'),
     }
 )
 

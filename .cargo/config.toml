@@ -1,0 +1,2 @@
+[env]
+BUILD_ROOT = { value = "builddir", relative = true }

@@ -9,10 +9,10 @@ use gtk::{
 
 use reqwest;
 
-use crate::{runtime, window::StreamsWindow};
+use crate::{config, runtime, window::StreamsWindow};
 
 pub fn sign_in() {
-    let client_id = ClientId::new(String::from("pk0svne4jfklyjqlul3h7qc852vmad"));
+    let client_id = ClientId::new(String::from(config::TWITCH_CLIENT_ID));
     let mut builder = DeviceUserTokenBuilder::new(client_id, vec![Scope::UserReadFollows]);
 
     let reqwest = reqwest::Client::builder()

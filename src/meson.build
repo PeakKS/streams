@@ -1,3 +1,9 @@
+rust_config = configure_file(
+    input: 'config.rs.in',
+    output: 'config.rs',
+    configuration: config,
+)
+
 cargo_bin = find_program('cargo')
 
 cargo_env = get_option('cargo_env')
@@ -28,4 +34,10 @@ custom_target(
         cargo_opt,
         '&&', 'cp', 'src'/rust_target/meson.project_name(), '@OUTPUT@',
     ],
+    depend_files: [
+        rust_config,
+    ],
+    depends: [
+        resources,
+    ]
 )
