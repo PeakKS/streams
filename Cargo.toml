@@ -9,3 +9,4 @@ adw = { package="libadwaita", version="0.7", features=["v1_6"] }
 twitch_api = { version = "0.7.0", features = ["reqwest", "eventsub", "twitch_oauth2"] }
 reqwest = "0.12"
 tokio = { version = "1", features = ["rt-multi-thread"] }
+keyring = { version = "3.6.1", features = ["apple-native", "windows-native", "sync-secret-service"] }
