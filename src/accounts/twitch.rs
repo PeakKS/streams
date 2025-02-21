@@ -1,29 +1,23 @@
-use std::{
-    str::{FromStr, Utf8Error},
-    string::FromUtf8Error,
-};
+use std::string::FromUtf8Error;
 
+use gtk::gio::Cancellable;
+use gtk::glib;
 use keyring::Entry;
-use twitch_api::twitch_oauth2::{
-    self,
-    tokens::errors::{DeviceUserTokenExchangeError, RefreshTokenError},
-    url, AccessToken, ClientId, DeviceUserTokenBuilder, RefreshToken, Scope, UserToken,
-};
-
-use gtk::{
-    gio::{ffi::GAsyncReadyCallback, Cancellable},
-    glib::{self, clone},
-};
-
 use reqwest;
+use twitch_api::twitch_oauth2::tokens::errors::{DeviceUserTokenExchangeError, RefreshTokenError};
+use twitch_api::twitch_oauth2::{
+    AccessToken, ClientId, DeviceUserTokenBuilder, RefreshToken, Scope,
+};
 
-use crate::{config, runtime, window::StreamsWindow};
+use crate::window::StreamsWindow;
+use crate::{config, runtime};
 
 const KEYRING_SERVICE: &str = "streams";
 const KEYRING_USER: &str = "twitch-refresh";
 
 const TWITCH_SCOPES: &[Scope] = &[Scope::UserReadFollows];
 
+#[allow(dead_code)] // Don't really care about handling these, but want them for debugging information
 #[derive(Debug)]
 enum TokenError {
     OAuthError(DeviceUserTokenExchangeError<reqwest::Error>),
@@ -59,7 +53,7 @@ impl From<keyring::Error> for TokenError {
 pub fn sign_in() {
     runtime().spawn(async move {
         println!("Refreshing Twitch access token...");
-        let access_token = match match refresh_token().await {
+        let _access_token = match match refresh_token().await {
             Ok(access_token) => Ok(access_token),
             Err(error) => {
                 eprintln!("Failed to refresh token: {error:?}");

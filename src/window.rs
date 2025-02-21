@@ -1,17 +1,16 @@
 use adw::subclass::prelude::{ObjectImpl, ObjectImplExt, ObjectSubclass, WidgetClassExt};
-use gtk::subclass::{
-    prelude::ApplicationWindowImpl,
-    widget::WidgetImpl,
-    window::{WindowImpl, WindowImplExt},
-};
-use gtk::{gio, glib, subclass::widget::CompositeTemplateClass, TemplateChild};
+use gtk::subclass::prelude::ApplicationWindowImpl;
+use gtk::subclass::widget::{CompositeTemplateClass, WidgetImpl};
+use gtk::subclass::window::{WindowImpl, WindowImplExt};
+use gtk::{gio, glib, TemplateChild};
 
 use crate::accounts::twitch;
 use crate::application::StreamsApplication;
 
 mod imp {
     use adw::subclass::prelude::AdwApplicationWindowImpl;
-    use gtk::{prelude::ButtonExt, subclass::widget::CompositeTemplateInitializingExt};
+    use gtk::prelude::ButtonExt;
+    use gtk::subclass::widget::CompositeTemplateInitializingExt;
 
     use super::*;
 
@@ -78,7 +77,7 @@ mod imp {
 
     impl StreamsWindow {
         fn configure_actions(&self) {
-            self.sign_in_button.connect_clicked(|arg| {
+            self.sign_in_button.connect_clicked(|_arg| {
                 println!("Clicked!");
                 twitch::sign_in();
             });

@@ -11,9 +11,8 @@ mod imp {
     use adw::subclass::prelude::{AdwApplicationImpl, ObjectSubclass};
     use gtk::glib::WeakRef;
 
-    use crate::window::StreamsWindow;
-
     use super::*;
+    use crate::window::StreamsWindow;
 
     #[derive(Debug, Default)]
     pub struct StreamsApplication {

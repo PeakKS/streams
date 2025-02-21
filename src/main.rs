@@ -10,7 +10,6 @@ use std::sync::OnceLock;
 
 use application::StreamsApplication;
 use gtk::{gio, glib};
-
 use tokio::runtime::Runtime;
 
 fn runtime() -> &'static Runtime {
