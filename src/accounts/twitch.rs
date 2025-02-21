@@ -3,11 +3,11 @@ use std::string::FromUtf8Error;
 use gtk::gio::Cancellable;
 use gtk::glib;
 use keyring::Entry;
-use reqwest;
 use twitch_api::twitch_oauth2::tokens::errors::{DeviceUserTokenExchangeError, RefreshTokenError};
 use twitch_api::twitch_oauth2::{
     AccessToken, ClientId, DeviceUserTokenBuilder, RefreshToken, Scope,
 };
+use {derive_more, reqwest};
 
 use crate::window::StreamsWindow;
 use crate::{config, runtime};
@@ -18,36 +18,12 @@ const KEYRING_USER: &str = "twitch-refresh";
 const TWITCH_SCOPES: &[Scope] = &[Scope::UserReadFollows];
 
 #[allow(dead_code)] // Don't really care about handling these, but want them for debugging information
-#[derive(Debug)]
+#[derive(Debug, derive_more::From)]
 enum TokenError {
     OAuthError(DeviceUserTokenExchangeError<reqwest::Error>),
     TokenParseError(FromUtf8Error),
     RefreshError(RefreshTokenError<reqwest::Error>),
     KeyringError(keyring::Error),
-}
-
-impl From<DeviceUserTokenExchangeError<reqwest::Error>> for TokenError {
-    fn from(value: DeviceUserTokenExchangeError<reqwest::Error>) -> Self {
-        Self::OAuthError(value)
-    }
-}
-
-impl From<FromUtf8Error> for TokenError {
-    fn from(value: FromUtf8Error) -> Self {
-        Self::TokenParseError(value)
-    }
-}
-
-impl From<RefreshTokenError<reqwest::Error>> for TokenError {
-    fn from(value: RefreshTokenError<reqwest::Error>) -> Self {
-        Self::RefreshError(value)
-    }
-}
-
-impl From<keyring::Error> for TokenError {
-    fn from(value: keyring::Error) -> Self {
-        Self::KeyringError(value)
-    }
 }
 
 pub fn sign_in() {
