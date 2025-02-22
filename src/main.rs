@@ -1,5 +1,6 @@
 mod accounts;
 mod application;
+mod preferences;
 mod window;
 
 mod config {

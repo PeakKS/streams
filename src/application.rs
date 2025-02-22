@@ -1,9 +1,10 @@
+use adw::prelude::AdwDialogExt;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::{gio, glib};
 
-use crate::config;
 use crate::window::StreamsWindow;
+use crate::{config, preferences};
 
 mod imp {
     use std::cell::OnceCell;
@@ -78,7 +79,18 @@ impl StreamsApplication {
             })
             .build();
 
-        self.add_action_entries([action_quit]);
+        let action_preferences = gio::ActionEntry::builder("preferences")
+            .activate(move |app: &Self, _, _| {
+                app.show_preferences();
+            })
+            .build();
+
+        self.add_action_entries([action_quit, action_preferences]);
+    }
+
+    fn show_preferences(&self) {
+        let preferences = preferences::PreferencesDialog::new();
+        preferences.present(Some(&self.main_window()));
     }
 
     fn setup_accels(&self) {

@@ -2,5 +2,8 @@
 <gresources>
     <gresource prefix="@PREFIX@">
         <file preprocess="xml-stripblanks">ui/window.ui</file>
+        <file preprocess="xml-stripblanks">ui/preferences/dialog.ui</file>
+        <file preprocess="xml-stripblanks">ui/preferences/general.ui</file>
+        <file preprocess="xml-stripblanks">ui/preferences/twitch.svg</file>
     </gresource>
 </gresources>

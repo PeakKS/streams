@@ -1,15 +1,13 @@
-use adw::subclass::prelude::{ObjectImpl, ObjectImplExt, ObjectSubclass, WidgetClassExt};
+use adw::subclass::prelude::{ObjectImpl, ObjectSubclass, WidgetClassExt};
 use gtk::subclass::prelude::ApplicationWindowImpl;
 use gtk::subclass::widget::{CompositeTemplateClass, WidgetImpl};
 use gtk::subclass::window::{WindowImpl, WindowImplExt};
 use gtk::{gio, glib, TemplateChild};
 
-use crate::accounts::twitch;
 use crate::application::StreamsApplication;
 
 mod imp {
     use adw::subclass::prelude::AdwApplicationWindowImpl;
-    use gtk::prelude::ButtonExt;
     use gtk::subclass::widget::CompositeTemplateInitializingExt;
 
     use super::*;
@@ -25,9 +23,6 @@ mod imp {
 
         #[template_child]
         pub stream_tab_view: TemplateChild<adw::TabView>,
-
-        #[template_child]
-        pub sign_in_button: TemplateChild<gtk::Button>,
     }
 
     impl Default for StreamsWindow {
@@ -36,7 +31,6 @@ mod imp {
                 split_view: TemplateChild::default(),
                 stream_tab_bar: TemplateChild::default(),
                 stream_tab_view: TemplateChild::default(),
-                sign_in_button: TemplateChild::default(),
             }
         }
     }
@@ -51,18 +45,12 @@ mod imp {
             klass.bind_template();
         }
 
-        fn instance_init(obj: &gtk::glib::subclass::InitializingObject<Self>) {
+        fn instance_init(obj: &glib::subclass::InitializingObject<Self>) {
             obj.init_template();
         }
     }
 
-    impl ObjectImpl for StreamsWindow {
-        fn constructed(&self) {
-            self.parent_constructed();
-
-            self.configure_actions();
-        }
-    }
+    impl ObjectImpl for StreamsWindow {}
 
     impl WidgetImpl for StreamsWindow {}
 
@@ -73,16 +61,8 @@ mod imp {
     }
 
     impl ApplicationWindowImpl for StreamsWindow {}
-    impl AdwApplicationWindowImpl for StreamsWindow {}
 
-    impl StreamsWindow {
-        fn configure_actions(&self) {
-            self.sign_in_button.connect_clicked(|_arg| {
-                println!("Clicked!");
-                twitch::sign_in();
-            });
-        }
-    }
+    impl AdwApplicationWindowImpl for StreamsWindow {}
 }
 
 glib::wrapper! {

@@ -1,6 +1,8 @@
 blueprints = custom_target('blueprints',
     input: files(
         'ui/window.blp',
+        'ui/preferences/dialog.blp',
+        'ui/preferences/general.blp',
     ),
     output: '.',
     command: [
@@ -19,5 +21,7 @@ resources = gnome.compile_resources('streams',
         configuration: config,
     ),
     gresource_bundle: true,
-    dependencies: blueprints
+    dependencies: [
+        blueprints,
+    ],
 )

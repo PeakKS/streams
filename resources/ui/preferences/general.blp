@@ -1,0 +1,22 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GeneralPreferences: Adw.PreferencesPage {
+  title: _("General");
+
+  Adw.PreferencesGroup {
+    title: _("Accounts");
+
+    Adw.ActionRow twitch_account {
+      title: _("Twitch");
+      subtitle: _("Not signed in");
+
+      activatable: true;
+      
+      [prefix]
+      Gtk.Image {
+          resource: "/stream/streamsapp/Streams/ui/preferences/twitch.svg";
+      }
+    }
+  }
+}
