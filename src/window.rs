@@ -15,7 +15,7 @@ mod imp {
     use super::*;
 
     #[derive(Debug, gtk::CompositeTemplate)]
-    #[template(resource = "/stream/streamsapp/Streams/gtk/window.ui")]
+    #[template(resource = "/stream/streamsapp/Streams/ui/window.ui")]
     pub struct StreamsWindow {
         #[template_child]
         pub split_view: TemplateChild<adw::OverlaySplitView>,

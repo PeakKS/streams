@@ -16,7 +16,7 @@ config = configuration_data(
     }
 )
 
-subdir('data')
+subdir('resources')
 subdir('src')
 
 gnome.post_install(

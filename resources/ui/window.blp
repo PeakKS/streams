@@ -16,6 +16,13 @@ template $StreamsWindow : Adw.ApplicationWindow {
         title-widget: Adw.WindowTitle {
           title: _("Channels");
         };
+
+        [end]
+        Gtk.MenuButton {
+          menu-model: primary_menu;
+          icon-name: "open-menu-symbolic";
+          tooltip-text: _("Main Menu");
+        }
       }
 
 
@@ -31,8 +38,10 @@ template $StreamsWindow : Adw.ApplicationWindow {
 
     content: Adw.ToolbarView {
       [top]
-      Adw.TabBar stream_tab_bar {
+      Adw.HeaderBar {
+        title-widget: Adw.TabBar stream_tab_bar {
         
+        };
       }
 
       content: Adw.TabView stream_tab_view {
@@ -40,4 +49,8 @@ template $StreamsWindow : Adw.ApplicationWindow {
       };
     };
   };
+}
+
+menu primary_menu {
+  item ("Preferences", "app.preferences")
 }

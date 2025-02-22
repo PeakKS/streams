@@ -24,7 +24,7 @@ fn main() {
         gresource_dir
     } else {
         // Match Gio Application behavior of creating resource base path from app id
-        format!("/{}/data", config::APP_ID.replace(".", "/"))
+        format!("/{}/resources", config::APP_ID.replace(".", "/"))
     };
 
     let res = gio::Resource::load(&format!("{gresource_dir}/streams.gresource"))
